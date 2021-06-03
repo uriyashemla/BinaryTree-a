@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include <stack>
@@ -9,7 +8,6 @@ using namespace std;
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
-
 
 namespace ariel
 {
@@ -135,26 +133,38 @@ namespace ariel
 
                         in_cur = in_cur->right;
                     }
+                    in_cur = in_tor.front();
                 }
             }
 
             inorder &operator++()
             {
                 in_tor.pop();
-                this->in_cur = in_tor.front();
+                if (in_tor.empty())
+                {
+                    in_cur = nullptr;
+                    return *this;
+                }
+                in_cur = in_tor.front();
                 return *this;
             }
             inorder &operator++(int)
             {
+                inorder temp = *this;
                 in_tor.pop();
-                this->in_cur = in_tor.front();
-                return *this;
+                if (in_tor.empty())
+                {
+                    in_cur = nullptr;
+                    return temp;
+                }
+                in_cur = in_tor.front();
+                return temp;
             }
             T *operator->()
             {
-                return &(in_tor.front()->get_data());
+                return &(in_tor.front()->data);
             }
-            const T &operator*() const
+            T &operator*() const
             {
                 return in_cur->data;
             }
@@ -199,6 +209,7 @@ namespace ariel
             preorder(Node *ptr = nullptr)
             {
                 pre_cur = ptr;
+                pre_s.push(pre_cur);
                 if (pre_cur == nullptr)
                 {
                 }
@@ -216,26 +227,38 @@ namespace ariel
                         if (pre_cur->left)
                             pre_s.push(pre_cur->left);
                     }
+                    pre_cur = pre_tor.front();
                 }
             }
 
             preorder &operator++()
             {
                 pre_tor.pop();
-                this->pre_cur = pre_tor.front();
+                if (pre_tor.empty())
+                {
+                    pre_cur = nullptr;
+                    return *this;
+                }
+                pre_cur = pre_tor.front();
                 return *this;
             }
             preorder &operator++(int)
             {
+                preorder temp = *this;
                 pre_tor.pop();
-                this->pre_cur = pre_tor.front();
-                return *this;
+                if (pre_tor.empty())
+                {
+                    pre_cur = nullptr;
+                    return temp;
+                }
+                pre_cur = pre_tor.front();
+                return temp;
             }
             T *operator->()
             {
                 return &(pre_tor.front()->data);
             }
-            const T &operator*() const
+            T &operator*() const
             {
                 return pre_cur->data;
             }
@@ -296,25 +319,37 @@ namespace ariel
                         pos_s2.pop();
                         pos_tor.push(pos_cur);
                     }
+                    pos_cur = pos_tor.front();
                 }
             }
             postorder &operator++()
             {
                 pos_tor.pop();
-                this->pos_cur = pos_tor.front();
+                if (pos_tor.empty())
+                {
+                    pos_cur = nullptr;
+                    return *this;
+                }
+                pos_cur = pos_tor.front();
                 return *this;
             }
             postorder &operator++(int)
             {
+                postorder temp = *this;
                 pos_tor.pop();
-                this->pos_cur = pos_tor.front();
-                return *this;
+                if (pos_tor.empty())
+                {
+                    pos_cur = nullptr;
+                    return temp;
+                }
+                pos_cur = pos_tor.front();
+                return temp;
             }
             T *operator->()
             {
                 return &(pos_tor.front()->data);
             }
-            const T &operator*() const
+            T &operator*() const
             {
                 return pos_cur->data;
             }
