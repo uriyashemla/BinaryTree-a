@@ -161,7 +161,7 @@ TEST_CASE("Build complex tree")
 
   8      10 11    13  14   15  16
 
-    9  12                     17
+   9   12                     17
 
                                  18
 */
@@ -193,6 +193,20 @@ TEST_CASE("Iterator with int tree")
     }
     CHECK(check == "9 8 4 12 10 11 5 2 13 14 6 15 18 17 16 7 3 1 ");
 }
+
+
+/*
+TEST_CASE("Build array tree")
+{
+    int r[] = {1, 2};
+    int lc[] = {4, 5};
+    int rc[] = {5, 6};
+    CHECK_NOTHROW(array_tree.add_root(r));
+    CHECK_NOTHROW(array_tree.add_right(r, rc));
+    CHECK_NOTHROW(array_tree.add_left(r, lc));
+    
+}
+*/
 
 TEST_CASE("Build big tree")
 {
